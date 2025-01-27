@@ -67,24 +67,26 @@ def main():
         from agency_swarm.util import create_agent_template
 
         create_agent_template(args.name, args.description, args.path, args.use_txt)
-    elif args.command == "genesis":
-        load_dotenv()
-        if not os.getenv("OPENAI_API_KEY") and not args.openai_key:
-            print(
-                "OpenAI API key not set. "
-                "Please set it with --openai_key argument or by setting OPENAI_API_KEY environment variable."
-            )
-            return
+   elif args.command == "genesis":
+    load_dotenv()
 
-        if args.openai_key:
-            from agency_swarm import set_openai_key
+    if not os.getenv("OPENAI_API_KEY") and not args.openai_key:
+        print(
+            "OpenAI API key not set. "
+            "Please set it with --openai_key argument or by setting OPENAI_API_KEY environment variable."
+        )
+        return
 
-            set_openai_key(args.openai_key)
+    if args.openai_key:
+        from agency_swarm import set_openai_key
+        set_openai_key(args.openai_key)
 
-        from agency_swarm.agency.genesis import GenesisAgency
+    from agency_swarm.agency.genesis import GenesisAgency
 
-        agency = GenesisAgency(with_browsing=args.with_browsing)
-        agency.run_demo()
+    # Update the model name to "gpt-4"
+    agency = GenesisAgency(with_browsing=args.with_browsing)
+    agency.run_demo()
+
     elif args.command == "import-agent":
         from agency_swarm.util import import_agent
 
